@@ -296,7 +296,6 @@ nav{
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f4f4f4;
 }
 
 .work-title{
@@ -336,6 +335,7 @@ nav{
 .project-card:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
 }
 
 .project-image {
@@ -405,4 +405,65 @@ nav{
   text-align: center;
   line-height: 1.6;
   max-width: 300px;
+}
+
+/*Project page*/
+.project{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 100px auto;
+  width: 85%;
+}
+.project h1{
+  margin-top: 50px;
+}
+.project h2{
+  color: #d7d7d7;
+  margin-top: 15px;
+  font-weight: 400;
+  font-size: 20px;
+}
+.project p{
+  margin-top: 70px;
+  text-align: center;
+  width: 70%;
+}
+.project .link{
+  margin-top: 60px;
+}
+.project-image{
+  background-color: gray;
+  height: 400px;
+  width: 100%;
+}
+.other-images{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 100px;
+  width: 100%;
+}
+.image{
+  background-color: grey;
+  height: 300px;
+  width: 49.2%;
+  margin-bottom: 20px;
+}
+.back-link {
+  position: absolute;
+  top: 30px;
+  left: 20px;
+}
+
+.back-link a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #ababab;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.back-link a:hover {
+  color: #333;
 }

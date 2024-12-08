@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Nav from '../components/Nav.jsx';
 
-// Dummy project data
 const projectsData = [
   {
     id: 1,
@@ -64,7 +63,7 @@ function Works() {
           >
             <div className="project-image" style={{backgroundImage: `url(${project.image})`}}>
               <div className="project-overlay">
-                <h3 className="project-name">{project.name}</h3>
+                <h2 className="project-name">{project.name}</h2>
                 <div className="project-details">
                   <p className="project-technologies">
                     {project.technologies.join(" - ")}
