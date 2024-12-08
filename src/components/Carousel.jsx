@@ -1,27 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Carousel() {
+  const [projects, setProjects] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = 3;
+  const navigate = useNavigate();
+
+  // Fetch projects from the backend
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/projects");
+        const data = await response.json();
+        setProjects(data);
+      } catch (error) {
+        console.error("Error fetching projects", error);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   const moveSlide = (direction) => {
     let nextSlide = currentSlide;
-    
+
     if (direction === 'right') {
-      nextSlide = currentSlide + 1 >= totalSlides ? 0 : currentSlide + 1;
+      nextSlide = currentSlide + 1 >= projects.length ? 0 : currentSlide + 1;
     } else {
-      nextSlide = currentSlide - 1 < 0 ? totalSlides - 1 : currentSlide - 1;
+      nextSlide = currentSlide - 1 < 0 ? projects.length - 1 : currentSlide - 1;
     }
-    
+
     setCurrentSlide(nextSlide);
   };
 
   return (
     <div className="works">
-        <div className='carousel-text'>
-            <h1>Works</h1>
-            <p>Here can you see my work</p>
-        </div>
+      <div className="carousel-text">
+        <h1>Works</h1>
+        <p>Here can you see my work</p>
+      </div>
       <div className="carousel">
         <div className="carousel__nav">
           <span id="moveLeft" className="carousel__arrow" onClick={() => moveSlide('left')}>
@@ -36,45 +52,33 @@ function Carousel() {
           </span>
         </div>
 
-        {[
-          {
-            subtitle: "The grand moment",
-            title: "Le tour",
-            description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
-            btnText: "Explore the tour",
-            imageClass: "carousel-item--1"
-          },
-          {
-            subtitle: "The big window",
-            title: "Minimal window",
-            description: "Clear Glass Window With Brown and White Wooden Frame iste natus error sit voluptatem accusantium doloremque laudantium.",
-            btnText: "Read the article",
-            imageClass: "carousel-item--2"
-          },
-          {
-            subtitle: "Tropical palms",
-            title: "Palms",
-            description: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
-            btnText: "Explore the palms",
-            imageClass: "carousel-item--3"
-          },
-
-        ].map((slide, index) => (
-          <div 
-            key={index} 
-            className={`carousel-item ${slide.imageClass} ${index === currentSlide ? 'active' : ''}`}
-          >
-            <div className="carousel-item__image"></div>
-            <div className="carousel-item__info">
-              <div className="carousel-item__container">
-                <h2 className="carousel-item__subtitle">{slide.subtitle}</h2>
-                <h1 className="carousel-item__title">{slide.title}</h1>
-                <p className="carousel-item__description">{slide.description}</p>
-                <a href="#" className="carousel-item__btn">{slide.btnText}</a>
+        {projects.length > 0 &&
+          projects.map((project, index) => (
+            <div
+              key={project._id}
+              className={`carousel-item ${index === currentSlide ? 'active' : ''}`}
+            >
+              <div
+                className="carousel-item__image"
+                style={{ backgroundImage: `url(${project.main_image})`, backgroundSize:"cover", backgroundRepeat:"no-repeat", backgroundPosition:"center" }}
+              ></div>
+              <div className="carousel-item__info">
+                <div className="carousel-item__container">
+                  <h2 className="carousel-item__subtitle">
+                    {project.technologies.join(" - ")}
+                  </h2>
+                  <h1 className="carousel-item__title">{project.name}</h1>
+                  <p className="carousel-item__description">{project.short_description}</p>
+                  <button
+                    className="carousel-item__btn"
+                    onClick={() => navigate(`/project?id=${project._id}`)}
+                  >
+                    Read more
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

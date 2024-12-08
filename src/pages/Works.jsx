@@ -1,81 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import Nav from '../components/Nav.jsx';
 
-const projectsData = [
-  {
-    id: 1,
-    name: "Portfolio Website",
-    technologies: ["React", "GSAP", "Tailwind CSS"],
-    description: "A responsive personal portfolio showcasing my web development and design skills, featuring smooth animations and modern UI/UX design.",
-    image: "https://via.placeholder.com/400x300?text=Portfolio+Website"
-  },
-  {
-    id: 2,
-    name: "E-Commerce Platform",
-    technologies: ["Next.js", "TypeScript", "Stripe"],
-    description: "A full-stack e-commerce application with secure payment integration, responsive design, and dynamic product management.",
-    image: "https://via.placeholder.com/400x300?text=E-Commerce+Platform"
-  },
-  {
-    id: 3,
-    name: "Social Media Dashboard",
-    technologies: ["React", "Redux", "Firebase"],
-    description: "A comprehensive social media analytics dashboard with real-time data visualization and user engagement tracking.",
-    image: "https://via.placeholder.com/400x300?text=Social+Media+Dashboard"
-  },
-  {
-    id: 4,
-    name: "Weather Forecast App",
-    technologies: ["Vue.js", "OpenWeatherMap API"],
-    description: "An intuitive weather application providing detailed forecasts, interactive maps, and location-based predictions.",
-    image: "https://via.placeholder.com/400x300?text=Weather+Forecast+App"
-  },
-  {
-   id: 5,
-   name: "Weather Forecast App",
-   technologies: ["Vue.js", "OpenWeatherMap API"],
-   description: "An intuitive weather application providing detailed forecasts, interactive maps, and location-based predictions.",
-   image: "https://via.placeholder.com/400x300?text=Weather+Forecast+App"
-   },
-];
-
 function Works() {
+  const [projects, setProjects] = useState([]);
   const [hoveredProject, setHoveredProject] = useState(null);
+  const navigate = useNavigate(); 
+
+  // Fetch projects from the backend
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/projects"); // Replace with your API endpoint
+        const data = await response.json();
+        setProjects(data);
+      } catch (error) {
+        console.error("Error fetching projects", error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   return (
     <div className="works-container">
       <Nav />
       <div className='work-title'>
-         <h1>
-            My work
-         </h1>
+         <h1>My work</h1>
          <div className='bar'>
             <div className='filled-bar'></div>
          </div>
       </div>
       <div className="works-grid">
-        {projectsData.map((project) => (
-          <div 
-            key={project.id} 
-            className={`project-card ${hoveredProject === project.id ? 'hovered' : ''}`}
-            onMouseEnter={() => setHoveredProject(project.id)}
-            onMouseLeave={() => setHoveredProject(null)}
-          >
-            <div className="project-image" style={{backgroundImage: `url(${project.image})`}}>
-              <div className="project-overlay">
-                <h2 className="project-name">{project.name}</h2>
-                <div className="project-details">
-                  <p className="project-technologies">
-                    {project.technologies.join(" - ")}
-                  </p>
-                  <p className="project-description">
-                    {project.description}
-                  </p>
+        {projects.length > 0 ? (
+          projects.map((project) => (
+            <div 
+              key={project._id} 
+              className={`project-card ${hoveredProject === project._id ? 'hovered' : ''}`}
+              onMouseEnter={() => setHoveredProject(project._id)}
+              onMouseLeave={() => setHoveredProject(null)}
+              onClick={() => navigate(`/project?id=${project._id}`)} // Navigate to the project page
+            >
+              <div 
+                className="project-image" 
+                style={{ backgroundImage: `url(${project.main_image})` }}
+              >
+                <div className="project-overlay">
+                  <h2 className="project-name">{project.name}</h2>
+                  <div className="project-details">
+                    <p className="project-technologies">
+                      {project.technologies.join(" - ")}
+                    </p>
+                    <p className="project-description">
+                      {project.short_description}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p>Loading projects...</p>
+        )}
       </div>
     </div>
   );

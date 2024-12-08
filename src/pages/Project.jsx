@@ -1,37 +1,52 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
-function Project(){
+function Project() {
+  const [project, setProject] = useState(null);
+  const [searchParams] = useSearchParams();
+  const projectId = searchParams.get("id");
 
-    return(
-        <div className="project">
-            <div className="back-link">
-                <Link to={"/"}>Go back to all my works</Link>
-            </div>
-            <div className="project-image">
-                
-            </div>
-            <h1>Title Project</h1>
-            <h2>Used tech</h2>
-            <p>Long as descriptionjl kdjmlksjdqflmsqdflkdsqf f sq fsqd fqsf sfdnsd flknsdlkfjsldmkfj lkmsdjflmdksfjmlskd jfmlkdsjflmkqsj flmkdjfl kmqsjflmkd kqsjdflkmjslmf kjslmkfjslkmdj flskdjlmsdjf</p>
-            <div className="other-images">
-                <div className="image">
+  useEffect(() => {
+    const fetchProject = async () => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/projects/${projectId}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setProject(data);
+        } catch (error) {
+            console.error("Error fetching project", error);
+        }
+    };
 
-                </div>
-                <div className="image">
+    if (projectId) {
+        fetchProject();
+    }
+    }, [projectId]);
 
-                </div>
-                <div className="image">
 
-                </div>
-                <div className="image">
+  if (!project) {
+    return <p>Loading...</p>;
+  }
 
-                </div>
-            </div>
-            <a href="" className="link">View project on github</a>
-        </div>
-    );
-
+  return (
+    <div className="project">
+      <div className="back-link">
+        <a href="/works">Go back to all my works</a>
+      </div>
+      <div className="project-image" style={{ backgroundImage: `url(${project.main_image})`, backgroundSize:"cover", backgroundRepeat:"no-repeat", backgroundPosition:"center" }}></div>
+      <h1>{project.name}</h1>
+      <h2>{project.technologies.join(" - ")}</h2>
+      <p>{project.description}</p>
+      <div className="other-images">
+        {project.images.map((image, index) => (
+          <div key={index} className="image" style={{ backgroundImage: `url(${image})`, backgroundSize:"cover", backgroundRepeat:"no-repeat", backgroundPosition:"center" }}></div>
+        ))}
+      </div>
+      <a href={project.link} target="_blank" className="link">View project on GitHub</a>
+    </div>
+  );
 }
 
 export default Project;
