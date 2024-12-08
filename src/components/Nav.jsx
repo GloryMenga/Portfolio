@@ -9,10 +9,9 @@ function Nav(){
             <ul className="menus">
                 <Link to={"/"}>Home</Link>
                 <Link to={"/works"}>Works</Link>
-                <Link to={"/about"}>About</Link>
-            </ul>
-            <ul className="contact">
-                <Link to={"/contact"}>Contact me!</Link>
+                <ul className="contact">
+                    <Link to={"/contact"}>Contact me!</Link>
+                </ul>
             </ul>
         </nav>
     );
