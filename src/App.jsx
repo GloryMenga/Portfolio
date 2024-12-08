@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Works from "./pages/Works.jsx";
 import Project from './pages/Project.jsx';
@@ -10,11 +10,13 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/works" element={<Works />} />
-        <Route path="/project" element={<Project />} />
-      </Routes>
+      <BrowserRouter basename='https://glorymenga.github.io/Portfolio/'>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/works" element={<Works />} />
+          <Route path="/project" element={<Project />} />
+        </Routes>
+      </BrowserRouter>
     </Router>
   )
 }
