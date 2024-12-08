@@ -34,7 +34,7 @@ function Project() {
   return (
     <div className="project">
       <div className="back-link">
-        <Link  to={"/works"}></Link>
+        <Link to={"/Portfolio/works"}></Link>
       </div>
       <div className="project-image" style={{ backgroundImage: `url(${project.main_image})`, backgroundSize:"cover", backgroundRepeat:"no-repeat", backgroundPosition:"center" }}></div>
       <h1>{project.name}</h1>
