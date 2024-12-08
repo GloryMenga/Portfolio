@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Project() {
   const [project, setProject] = useState(null);
@@ -33,7 +34,7 @@ function Project() {
   return (
     <div className="project">
       <div className="back-link">
-        <a href="/works">Go back to all my works</a>
+        <Link  to={"/works"}></Link>
       </div>
       <div className="project-image" style={{ backgroundImage: `url(${project.main_image})`, backgroundSize:"cover", backgroundRepeat:"no-repeat", backgroundPosition:"center" }}></div>
       <h1>{project.name}</h1>
