@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="refresh" content="0; URL=/Portfolio/" />
     <script>
-      const redirectUrl = '/Portfolio' + window.location.pathname + window.location.search;
-      window.location.replace(redirectUrl);
+      const redirectPath = window.location.pathname.replace('/Portfolio', '');
+      const query = window.location.search;
+
+      if (!window.location.pathname.startsWith('/Portfolio')) {
+        window.location.replace(`/Portfolio${redirectPath}${query}`);
+      }
     </script>
   </head>
-  <body></body>
+  <body>
+    Redirecting...
+  </body>
 </html>
