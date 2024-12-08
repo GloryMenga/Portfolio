@@ -10,7 +10,7 @@ function Nav(){
                 <Link to={"/"}>Home</Link>
                 <Link to={"/works"}>Works</Link>
                 <ul className="contact">
-                    <Link to={"/contact"}>Contact me!</Link>
+                <a href="mailto:mengaglory@gmail.com">Contact me!</a>
                 </ul>
             </ul>
         </nav>
