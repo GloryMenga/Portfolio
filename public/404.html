@@ -2,11 +2,14 @@
 <html>
   <head>
     <script>
-      const redirectPath = window.location.pathname.replace('/Portfolio', '');
-      const query = window.location.search;
-
+      // If the current location does not include `/Portfolio`, fix it
       if (!window.location.pathname.startsWith('/Portfolio')) {
-        window.location.replace(`/Portfolio${redirectPath}${query}`);
+        // Redirect to the correct base path
+        const newPath = '/Portfolio' + window.location.pathname + window.location.search + window.location.hash;
+        window.location.replace(newPath);
+      } else {
+        // If already at the correct base path, load the app
+        window.location.replace('/Portfolio/');
       }
     </script>
   </head>
