@@ -9,7 +9,7 @@ import './App.css'
 function App() {
 
   return (
-      <BrowserRouter basename='https://glorymenga.github.io/Portfolio/'>
+      <BrowserRouter basename='/Portfolio/'>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/works" element={<Works />} />
