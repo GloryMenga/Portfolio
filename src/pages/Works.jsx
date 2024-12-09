@@ -7,7 +7,6 @@ function Works() {
   const [hoveredProject, setHoveredProject] = useState(null);
   const navigate = useNavigate(); 
 
-  // Fetch projects from the backend
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -27,9 +26,6 @@ function Works() {
       <Nav />
       <div className='work-title'>
          <h1>My work</h1>
-         <div className='bar'>
-            <div className='filled-bar'></div>
-         </div>
       </div>
       <div className="works-grid">
         {projects.length > 0 ? (
