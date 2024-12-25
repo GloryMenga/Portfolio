@@ -35,7 +35,7 @@ function Works() {
               className={`project-card ${hoveredProject === project._id ? 'hovered' : ''}`}
               onMouseEnter={() => setHoveredProject(project._id)}
               onMouseLeave={() => setHoveredProject(null)}
-              onClick={() => navigate(`/project?id=${project._id}`)} // Navigate to the project page
+              onClick={() => navigate(`/project?id=${project._id}`)} 
             >
               <div 
                 className="project-image" 
